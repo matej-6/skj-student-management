@@ -1,4 +1,11 @@
-import { computed, Injectable, signal } from '@angular/core';
+import {
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  Injectable,
+  signal,
+} from '@angular/core';
 import { type Student } from './student.type';
 
 const starterStudents: Student[] = [
@@ -32,6 +39,8 @@ const starterStudents: Student[] = [
   providedIn: 'root',
 })
 export class StudentService {
+  private destroyRef = inject(DestroyRef);
+
   private _students = signal(new Array<Student>());
   students = this._students.asReadonly();
 
@@ -92,6 +101,14 @@ export class StudentService {
   }
 
   constructor() {
+    const onStudentChange = effect(() => {
+      localStorage.setItem('students', JSON.stringify([...this._students()]));
+    });
+
+    this.destroyRef.onDestroy(() => {
+      onStudentChange.destroy();
+    });
+
     const savedStudents = localStorage.getItem('students');
     if (!savedStudents) {
       const newStudents = new Array<Student>(starterStudents.length);
@@ -117,6 +134,12 @@ export class StudentService {
     return s.meno + s.priezvisko;
   }
 
+  isAvailable(meno: string, priezvisko: string) {
+    return !this._students().find(
+      (val) => this.getId(val) == meno + priezvisko
+    );
+  }
+
   private saveToLocalStorage() {
     localStorage.setItem('students', JSON.stringify([...this._students()]));
   }
@@ -126,12 +149,30 @@ export class StudentService {
       return;
     }
 
+    const sid = this.getId(s);
+
+    const exists = this._students().find((val) => this.getId(val) == sid);
+    if (exists) {
+      return;
+    }
+
     this._students.update((prev) => {
       prev.push(s);
       return prev;
     });
+  }
 
-    this.sortStudents();
+  removeStudent(s: Student) {
+    if (!s) {
+      return;
+    }
+
+    const remId = this.getId(s);
+
+    this._students.update((prev) => {
+      prev.filter((val) => this.getId(val) != remId);
+      return prev;
+    });
   }
 
   filterByName() {}

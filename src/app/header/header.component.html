@@ -1,0 +1,7 @@
+<header class="flex w-full px-8 justify-end py-4">
+  @if (isLoggedIn()) {
+  <app-button (click)="signOut()">Odhlasit sa</app-button>
+  } @else {
+  <app-button (click)="turnModal(true)">Prihlasit sa</app-button>
+  }
+</header>

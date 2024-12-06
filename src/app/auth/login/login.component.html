@@ -1,0 +1,27 @@
+<form
+  (ngSubmit)="signIn()"
+  #signInForm="ngForm"
+  class="flex flex-col items-center gap-y-8"
+>
+  <p>** heslo je {{ PASSWORD }} **</p>
+  <label for="heslo">Heslo:</label>
+  <input
+    type="text"
+    required
+    [(ngModel)]="hesloInput"
+    id="heslo"
+    name="heslo"
+    class="bg-gray-100 text-lg"
+    #heslo="ngModel"
+  />
+  <button
+    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg"
+    [disabled]="!signInForm.form.valid"
+    type="submit"
+  >
+    Prihlasit
+  </button>
+  @if (hesloInputMessage()) {
+  <div class="text-red-500">{{ hesloInputMessage() }}</div>
+  }
+</form>
