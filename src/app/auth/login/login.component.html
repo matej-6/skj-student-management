@@ -14,6 +14,10 @@
     class="bg-gray-100 text-lg"
     #heslo="ngModel"
   />
+  @if (!heslo.pristine && heslo.errors?.['required']) {
+    <p class="text-red-500">Zadajte heslo.</p>
+
+  }
   <button
     class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg"
     [disabled]="!signInForm.form.valid"
