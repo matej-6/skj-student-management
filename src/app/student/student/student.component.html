@@ -1,7 +1,5 @@
 <div class="flex justify-between w-full">
-  <div>{{student().meno}} <span class="font-semibold">{{student().priezvisko}}</span> @if (student().trieda) {
-    , {{student().trieda}}
-  }
+  <div>{{student().meno}} <span class="font-semibold">{{student().priezvisko}}</span> {{student().trieda | nezadefinovane}}
   </div>
 
   <div class="flex gap-x-2">
