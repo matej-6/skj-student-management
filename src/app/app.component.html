@@ -1,7 +1,25 @@
 <app-header />
-<main class="w-full text-gray-900 py-20 flex justify-center">
+<main class="w-full max-w-[600px] mx-auto text-gray-900 px-16 py-20 flex flex-col gap-y-4 items-start justify-center">
   @if (isLoggedIn()) {
-  <h1>show students...</h1>
+
+    @if (!pridavanieStudenta()) {
+      <button (click)="setPridavanieStudenta(true)" class="bg-green-400 border-green-500 border-2 px-2 py-1 block text-white rounded-lg">Pridat studenta</button>
+
+    } @else {
+      <button class="text-gray-600 hover:text-gray-800" (click)="setPridavanieStudenta(false)">Zrusit pridavanie studenta</button>
+    }
+    <div class="flex flex-col gap-y-6 w-full">
+
+    @if (pridavanieStudenta()) {
+      <app-new-student-form (end)="setPridavanieStudenta(false)"/>
+    } @else {
+      <app-student-filters />
+      <div class="h-1 w-full bg-gray-300 rounded-full"></div>
+      <app-student-list/>
+    }
+
+    </div>
+
   } @else { @if (showModal()) {
   <app-login />
   } @else {

@@ -1,0 +1,8 @@
+<div class="flex flex-col w-full">
+  @for (student of students(); track student._id) {
+    <div class="even:bg-gray-100 py-2 px-1">
+      <app-student [student]="student"/>
+
+    </div>
+  }
+</div>

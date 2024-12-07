@@ -1,0 +1,20 @@
+<form class="flex flex-col gap-y-4">
+  <div class="flex gap-x-2">
+    <label for="search">Vyhladavanie</label>
+    <input id="search" name="search" type="text" class="bg-gray-100 text-lg px-2 rounded-lg" [(ngModel)]="search" (ngModelChange)="updateSearch()"/>
+    <button (click)="zrusitVyladavanie()">Zrusit</button>
+  </div>
+  <div class="flex gap-x-8">
+    @for (filter of filters; track filter.index) {
+      <div class="flex gap-x-2">
+        <label [for]="filter.filter">{{filter.filter}}</label>
+        <input (click)="selectFilter(filter.filter)" type="radio" name="filter" [id]="filter.filter" [value]="filter.filter" [checked]="filter.filter == activeFilter()"/>
+      </div>
+    }
+  </div>
+</form>
+@if (pocet_vysledkov() == 0) {
+  <p class="text-gray-600">Neboli najdeni ziadni studenti</p>
+} @else {
+  <p class="text-gray-600">Pocet vysledkov: {{pocet_vysledkov()}}</p>
+}

@@ -1,0 +1,75 @@
+<form class="w-full" #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="flex gap-x-2 w-full">
+    <label for="meno">Meno</label>
+
+    <input #menoInput="ngModel" required type="text" [(ngModel)]="model.meno" id="meno" name="meno" class="bg-gray-50 px-1"/>
+    @if(!menoInput.pristine && !menoInput.valid){
+      <span class="text-red-500">Meno musi byt zadane.</span>
+
+    }
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <label for="priezvisko">Priezvisko</label>
+    <input #priezviskoInput="ngModel" required type="text" [(ngModel)]="model.priezvisko" id="priezvisko" name="priezvisko" class="bg-gray-50 px-1"/>
+    @if (!priezviskoInput.pristine && !priezviskoInput.valid) {
+      <span class="text-red-500">Priezvisko musi byt zadane.</span>
+    }
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <p>Trieda</p>
+    <select [(ngModel)]="model.trieda" id="trieda" name="trieda">
+      <option [selected]="!model.trieda" [value]="undefined" id="trieda_undefined">Ziadna</option>
+      @for (trieda of triedy; track $index) {
+        <option [id]="trieda" [value]="trieda" [selected]="trieda === model.trieda">{{trieda}}</option>
+      }
+    </select>
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <label for="datum_narodenia">Datum narodenia</label>
+    <input type="date" [(ngModel)]="model.datum_narodenia" id="datum_narodenia" name="datum_narodenia" class="bg-gray-50 px-1 w-full"/>
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <p>Odbor</p>
+    <select [(ngModel)]="model.odbor"  id="odbor" name="odbor">
+      <option id="odbor_undefined" [value]="undefined" [selected]="!model.odbor">Ziadny</option>
+      @for (odbor of odbory; track $index) {
+        <option [value]="odbor" [id]="odbor" [selected]="odbor === model.odbor">{{odbor}}</option>
+      }
+    </select>
+
+
+
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <label for="info">Info</label>
+    <input type="text" [(ngModel)]="model.info" id="info" name="info" class="bg-gray-50 px-1"/>
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <label for="disabled">Disabled</label>
+    <input type="checkbox" [(ngModel)]="model.disabled" id="disabled" name="disabled" class="bg-gray-50 px-1"/>
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <p>Pohlavie</p>
+
+    @for (poh of pohlavia; track $index) {
+      <label [for]="poh">{{poh}}</label>
+      <input type="radio" [checked]="poh === model.pohlavie" [id]="poh" name="pohlavie" [(ngModel)]="model.pohlavie" [value]="poh" class="bg-transparent"/>
+    }
+  </div>
+  <div class="flex gap-x-2 w-full">
+    <label for="priemer">Priemer</label>
+    <input #priemerModel="ngModel" type="number" min="1" max="5" [(ngModel)]="model.priemer" id="priemer" name="priemer" class="bg-gray-50 px-1"/>
+    @if (!priemerModel.pristine && priemerModel.invalid) {
+      <span class="text-xs text-red-500">Priemer musi byt medzi 1.00 a 5.00</span>
+    }
+  </div>
+
+
+  <button class="py-2 px-1 my-4 bg-gray-300 disabled:text-gray-500 rounded-lg" type="submit" [disabled]="!form.valid">Vytvorit</button>
+  @if(resMessage()){
+    <p class="text-red-500">{{resMessage()}}</p>
+  }
+
+
+
+</form>
