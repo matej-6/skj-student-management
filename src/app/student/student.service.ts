@@ -156,6 +156,8 @@ export class StudentService {
 
     const originalStudent = this._students().find(val => val._id === sid)
 
+    console.log("original:", originalStudent);
+
     if (!jeVolne && editedStudent.meno !== originalStudent?.meno && editedStudent.priezvisko !== originalStudent?.priezvisko) {
       return "Meno a priezvikso su uz pouzite."
     }
