@@ -14,7 +14,7 @@ import {NewStudentFormComponent} from './student/new-student-form/new-student-fo
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'skj-student-management';
+  title = 'Student manazment';
 
   private authService = inject(AuthService);
 

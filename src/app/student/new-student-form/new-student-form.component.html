@@ -34,7 +34,7 @@
   <div class="flex gap-x-2 w-full">
     <p>Trieda</p>
     <select [(ngModel)]="model.trieda" id="trieda" name="trieda">
-      <option [selected]="!model.trieda" value="" id="trieda_undefined">
+      <option [selected]="!model.trieda" [value]="undefined" id="trieda_undefined">
         Ziadna
       </option>
       @for (trieda of triedy; track $index) {
@@ -63,8 +63,8 @@
     <select [(ngModel)]="model.odbor" id="odbor" name="odbor">
       <option
         id="odbor_undefined"
-        value=""
-        [selected]="model.odbor === undefined"
+        [value]="undefined"
+        [selected]="model.odbor == undefined"
       >
         Ziadny
       </option>
